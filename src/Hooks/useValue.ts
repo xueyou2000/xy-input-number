@@ -1,0 +1,177 @@
+import { InputNumberFormatter, InputNumberParser, NumberInputProps } from '@/interface';
+import { useControll } from 'utils-hooks';
+import { useState } from 'react';
+
+const FIX_NUMBER = 1000;
+
+/**
+ * 保留精度
+ * @param precision 
+ * @param val 
+ */
+export function coverPrecision(precision: number, val: string | number): string {
+    if (precision === undefined || val === undefined || val === '') {
+        return String(val);
+    } else {
+        return parseFloat(val + '').toFixed(precision);
+    }
+}
+
+/**
+ * 默认格式化
+ * @description 返回数值的字符串
+ * @param value 
+ */
+export const DefaultFormatter: InputNumberFormatter = (value: number | string) => {
+    if (value === undefined || value === null) {
+        return "";
+    } else {
+        return (value + "");
+    }
+};
+
+/**
+ * 默认格式化
+ * @description 返回对应的反格式化字符串
+ * @param value 
+ */
+export const DefaultParser: InputNumberParser = (value: string) => {
+    if (value) {
+        return (value + '');
+    } else {
+        return '';
+    }
+};
+
+/**
+ * 字符串转换为数值
+ * @description 返回undefined则不是数值
+ * @param val 
+ */
+function coverNumber(val: string) {
+    if (val) {
+        const number = parseFloat(val + '');
+        if (!isNaN(number)) {
+            return number;
+        }
+    }
+}
+
+type UseValueReturn = [(val: number | string) => string, string, React.Dispatch<React.SetStateAction<string>>, (val: string) => void, () => boolean, () => boolean, () => void, () => void];
+
+export default function useValue(props: NumberInputProps): UseValueReturn {
+    const { min, max, step = 1, precision, parser = DefaultParser, formatter = DefaultFormatter, onChange } = props;
+    // 受控数值
+    const [value, setValue, isControll] = useControll<number>(props, "value", "defaultValue");
+    // 输入框里的临时字符串
+    const [inputValue, setInputValue] = useState<string>(getFormatterInputValue(value));
+
+    /**
+     * 获取当前数值对应的输入框字符串
+     * @param val 
+     */
+    function getFormatterInputValue(val: number | string) {
+        const numberValue = getParserNumber(val);
+        return formatter(numberValue === undefined ? '' : numberValue + '');
+    }
+
+    /**
+     * 解析为数值字符串
+     * @param val 
+     */
+    function getParserNumber(val: number | string) {
+        return parser(val === undefined ? '' : val + '');
+    }
+
+    /**
+     * 改变值
+     * @param val 
+     */
+    function changeValue(val: string) {
+        if (props.disabled) {
+            return;
+        }
+
+        let numberValue = coverNumber(coverPrecision(precision, getParserNumber(val)));
+        if (min !== undefined && numberValue < min) {
+            numberValue = min;
+        }
+        if (max !== undefined && numberValue > max) {
+            numberValue = max;
+        }
+
+        setInputValue(getFormatterInputValue(numberValue));
+
+        if (!isControll) {
+            setValue(numberValue);
+        }
+
+        if (onChange) {
+            onChange(numberValue);
+        }
+    }
+
+    /**
+     * 是否可以自增
+     */
+    function canIncrease(getNextValue?: (number: number) => void) {
+        const numberValue = coverNumber(getParserNumber(value));
+        if (numberValue !== undefined) {
+            const next = (numberValue * FIX_NUMBER + step * FIX_NUMBER) / FIX_NUMBER;
+            if (getNextValue) {
+                getNextValue(next);
+            }
+            return max === undefined || next <= max;
+        } else {
+            if (getNextValue) {
+                getNextValue(min === undefined ? 1 : min);
+            }
+            return true;
+        }
+    }
+
+    /**
+     * 是否可以自减
+     */
+    function canDecrease(getNextValue?: (number: number) => void) {
+        const numberValue = coverNumber(getParserNumber(value));
+        if (numberValue !== undefined) {
+            const next = (numberValue * FIX_NUMBER - step * FIX_NUMBER) / FIX_NUMBER;
+            if (getNextValue) {
+                getNextValue(next);
+            }
+            return min === undefined || next >= min;
+        } else {
+            if (getNextValue) {
+                getNextValue(max === undefined ? 1 : max);
+            }
+            return true;
+        }
+    }
+
+    /**
+     * 自增值
+     */
+    function increase() {
+        let next: number;
+        const getNextValue = (n: number) => { next = n; };
+
+        if (canIncrease(getNextValue)) {
+            changeValue(next + '');
+        }
+    }
+
+    /**
+     * 自减值
+     */
+    function decrease() {
+        let next: number;
+        const getNextValue = (n: number) => { next = n; };
+
+        if (canDecrease(getNextValue)) {
+            changeValue(next + '');
+        }
+    }
+
+    return [getFormatterInputValue, inputValue, setInputValue, changeValue, canIncrease, canDecrease, increase, decrease];
+}

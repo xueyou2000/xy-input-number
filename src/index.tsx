@@ -1,18 +1,74 @@
-import React from "react";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import React, { useState } from "react";
+import useValue, { DefaultFormatter, coverPrecision, DefaultParser } from './Hooks/useValue';
+import { NumberInputProps } from "./interface";
 
-export interface MyComponentProps {
-    /**
-     * 根节点附加类名
-     */
-    className?: string;
-    /**
-     * 内敛样式
-     */
-    style?: React.CSSProperties;
+export function NumberInput(props: NumberInputProps) {
+    const { prefixCls = "xy-inputnumber", className, style, defaultValue, onChange, parser = DefaultParser, formatter = DefaultFormatter, precision, min, max, step = 1, onKeyDown, ...genericProps } = props;
+    const [getFormatterInputValue, inputValue, setInputValue, changeValue, canIncrease, canDecrease, increase, decrease] = useValue(props);
+    const classString = classNames(prefixCls, className, {
+        [`${prefixCls}-disabled`]: props.disabled
+    });
+
+    function changeHandle(event: React.ChangeEvent<HTMLInputElement>) {
+        setInputValue(getFormatterInputValue(event.target.value));
+    }
+
+    function keyDownHandle(event: React.KeyboardEvent<HTMLInputElement>) {
+        if (onKeyDown) {
+            onKeyDown(event);
+        }
+
+        const input = event.currentTarget;
+
+        switch (event.keyCode) {
+            // 回车
+            case 13:
+                changeValue(input.value);
+                event.preventDefault();
+                return;
+            // 上方向
+            case 38:
+                increase();
+                event.preventDefault();
+                return;
+            // 下方向
+            case 40:
+                decrease();
+                event.preventDefault();
+                return;
+        }
+    }
+
+    function blurHandle(event: React.FocusEvent<HTMLInputElement>) {
+        changeValue(event.target.value);
+    }
+
+    function renderControl() {
+        return (
+            <div className={`${prefixCls}-control-wrap`}>
+                <span className={classNames(`${prefixCls}-control`, "control-up", { disabled: !canIncrease() })} onClick={increase}>
+                    <span className={`${prefixCls}-control-inner`}>
+                        <FontAwesomeIcon icon={faChevronUp} />
+                    </span>
+                </span>
+                <span className={classNames(`${prefixCls}-control`, "control-down", { disabled: !canDecrease() })} onClick={decrease}>
+                    <span className={`${prefixCls}-control-inner`}>
+                        <FontAwesomeIcon icon={faChevronDown} />
+                    </span>
+                </span>
+            </div>
+        );
+    }
+
+    return (
+        <div className={classString} style={style}>
+            {renderControl()}
+            <input {...genericProps} value={inputValue} autoComplete="off" aria-disabled={props.disabled} onChange={changeHandle} onKeyDown={keyDownHandle} onBlur={blurHandle} className={`${prefixCls}-input`} />
+        </div>
+    );
 }
 
-export function MyComponent(props: MyComponentProps) {
-    return <div>Hello</div>;
-}
-
-export default MyComponent;
+export default React.memo(NumberInput);

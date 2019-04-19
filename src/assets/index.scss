@@ -1,0 +1,169 @@
+$InputNumberPrefixCls: "xy-inputnumber";
+
+$--primary-color: #1890ff !default;
+$color-unchecked: #ffffff;
+$color-unchecked-border: #d9d9d9;
+$color-checked: #3dbcf6;
+$color-disabled: #f3f3f3;
+$color-checked-disabled-border: #cccccc;
+$--placeholder-color: #bfbfbf;
+$--disabled-color: rgba(0, 0, 0, 0.25);
+$--disabled-bg: #f5f5f5;
+$--disabled-color-dark: #d9d9d9;
+
+.#{$InputNumberPrefixCls} {
+    box-sizing: border-box;
+    position: relative;
+    height: 32px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.65);
+    background-color: $color-unchecked;
+    background-image: none;
+    border: 1px solid $color-unchecked-border;
+    display: inline-block;
+    border-radius: 4px;
+    min-width: 90px;
+    width: 100%;
+    transition: 0.3s;
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+        border-color: #40a9ff;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        outline: 0;
+        z-index: 1;
+    }
+
+    &.#{$InputNumberPrefixCls}-disabled {
+        background-color: $--disabled-bg;
+        border-color: $--disabled-color-dark;
+        color: $--disabled-color;
+        cursor: not-allowed;
+    }
+
+    &:not(.#{$InputNumberPrefixCls}-disabled):hover {
+        border-color: $--primary-color;
+
+        & > .#{$InputNumberPrefixCls}-control-wrap {
+            opacity: 1;
+        }
+    }
+}
+.#{$InputNumberPrefixCls}-input {
+    width: 100%;
+    height: 100%;
+    padding-right: 25px;
+    padding-left: 11px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+}
+.#{$InputNumberPrefixCls}-control-wrap {
+    border-left: 1px solid #d9d9d9;
+    width: 22px;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    border-radius: 0 4px 4px 0;
+    transition: opacity 0.24s linear 0.1s;
+    z-index: 2;
+    user-select: none;
+
+    .control-up .#{$InputNumberPrefixCls}-control-inner {
+        top: 50%;
+        margin-top: -6px;
+    }
+
+    .control-down .#{$InputNumberPrefixCls}-control-inner {
+        top: 50%;
+        margin-top: -6px;
+    }
+}
+.#{$InputNumberPrefixCls}-control {
+    text-align: center;
+    line-height: 0;
+    height: 50%;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.45);
+    position: relative;
+    transition: all 0.1s linear;
+    display: block;
+    width: 100%;
+    font-weight: 700;
+    cursor: pointer;
+
+    &.control-down {
+        border-top: 1px solid #d9d9d9;
+        top: -1px;
+        cursor: pointer;
+    }
+
+    &.disabled {
+        background-color: $--disabled-bg;
+        border-color: $--disabled-color-dark;
+        color: $--disabled-color;
+        cursor: not-allowed;
+    }
+
+    &:hover .inputnumber-control-inner {
+        color: $--primary-color;
+    }
+
+}
+.#{$InputNumberPrefixCls}-control-inner {
+    font-style: normal;
+    vertical-align: baseline;
+    text-align: center;
+    text-transform: none;
+    line-height: 1;
+    text-rendering: optimizeLegibility;
+    line-height: 12px;
+    user-select: none;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    transition: all 0.1s linear;
+    display: inline-block;
+    font-size: 12px;
+    transform: scale(0.58333333) rotate(0deg);
+    right: 4px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+/** rest**/
+textarea,
+input {
+    // Firefox
+    &::-moz-placeholder {
+        // #bfbfbf
+        color: $--placeholder-color;
+        opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+    }
+    // Internet Explorer 10+
+    &:-ms-input-placeholder {
+        color: $--placeholder-color;
+    }
+    // Safari and Chrome
+    &::-webkit-input-placeholder {
+        color: $--placeholder-color;
+    }
+}
+
+input:disabled {
+    background-color: $--disabled-bg;
+    border-color: $--disabled-color-dark;
+    color: $--disabled-color;
+    cursor: not-allowed;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
+    -webkit-appearance: none;
+}
