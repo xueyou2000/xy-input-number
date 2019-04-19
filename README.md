@@ -36,8 +36,8 @@ yarn add xy-input-number
 ```ts
 import React from "react";
 import ReactDOM from "react-dom";
-import XyInputNumber from "xy-input-number";
-ReactDOM.render(<XyInputNumber />, container);
+import InputNumber from "xy-input-number";
+ReactDOM.render(<InputNumber />, container);
 ```
 
 ## 开发

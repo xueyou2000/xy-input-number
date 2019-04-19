@@ -26,8 +26,8 @@ export default function () {
             <NumberInput style={{ width: "180px" }} max={15} min={3} />
 
             <h1>步长</h1>
-            <p>步长为 0.33</p>
-            <NumberInput style={{ width: "180px" }} step={0.33} />
+            <p>步长为 0.33, 最大15, 最小3</p>
+            <NumberInput style={{ width: "180px" }} step={0.33} max={15} min={3} />
 
             <h1>自定义格式化</h1>
             <p>前缀加上美元符号</p>

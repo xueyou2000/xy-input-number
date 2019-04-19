@@ -60,7 +60,7 @@ export interface InputGenericProps {
     onCompositionEnd?: (e: React.CompositionEvent<HTMLInputElement>) => void;
 }
 
-export interface NumberInputProps extends InputGenericProps {
+export interface InputNumberProps extends InputGenericProps {
     /**
      * 值
      */

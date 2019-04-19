@@ -1,12 +1,12 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import React, { useState } from "react";
-import useValue, { DefaultFormatter, coverPrecision, DefaultParser } from './Hooks/useValue';
-import { NumberInputProps } from "./interface";
+import React from "react";
+import useValue, { DefaultFormatter, DefaultParser } from './Hooks/useValue';
+import { InputNumberProps } from "./interface";
 
-export function NumberInput(props: NumberInputProps) {
-    const { prefixCls = "xy-inputnumber", className, style, defaultValue, onChange, parser = DefaultParser, formatter = DefaultFormatter, precision, min, max, step = 1, onKeyDown, ...genericProps } = props;
+export function InputNumber(props: InputNumberProps) {
+    const { prefixCls = "xy-inputnumber", className, style, defaultValue, onChange, parser = DefaultParser, formatter = DefaultFormatter, precision, min, max, step = 1, onKeyDown, onBlur, ...genericProps } = props;
     const [getFormatterInputValue, inputValue, setInputValue, changeValue, canIncrease, canDecrease, increase, decrease] = useValue(props);
     const classString = classNames(prefixCls, className, {
         [`${prefixCls}-disabled`]: props.disabled
@@ -44,6 +44,9 @@ export function NumberInput(props: NumberInputProps) {
 
     function blurHandle(event: React.FocusEvent<HTMLInputElement>) {
         changeValue(event.target.value);
+        if (onBlur) {
+            onBlur(event);
+        }
     }
 
     function renderControl() {
@@ -71,4 +74,4 @@ export function NumberInput(props: NumberInputProps) {
     );
 }
 
-export default React.memo(NumberInput);
+export default React.memo(InputNumber);

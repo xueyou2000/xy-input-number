@@ -36,13 +36,6 @@ $--disabled-color-dark: #d9d9d9;
         z-index: 1;
     }
 
-    &.#{$InputNumberPrefixCls}-disabled {
-        background-color: $--disabled-bg;
-        border-color: $--disabled-color-dark;
-        color: $--disabled-color;
-        cursor: not-allowed;
-    }
-
     &:not(.#{$InputNumberPrefixCls}-disabled):hover {
         border-color: $--primary-color;
 
@@ -51,10 +44,22 @@ $--disabled-color-dark: #d9d9d9;
         }
     }
 }
+.#{$InputNumberPrefixCls}.#{$InputNumberPrefixCls}-disabled {
+    background-color: $--disabled-bg;
+    border-color: $--disabled-color-dark;
+    color: $--disabled-color;
+    cursor: not-allowed;
+
+    .#{$InputNumberPrefixCls}-control-wrap {
+        background: #eee;
+        cursor: not-allowed;
+    }
+
+}
 .#{$InputNumberPrefixCls}-input {
     width: 100%;
     height: 100%;
-    padding-right: 25px;
+    padding-right: 28px;
     padding-left: 11px;
     box-sizing: border-box;
     border: none;
@@ -68,7 +73,7 @@ $--disabled-color-dark: #d9d9d9;
     position: absolute;
     top: 0;
     right: 0;
-    opacity: 0;
+    // opacity: 0;
     border-radius: 0 4px 4px 0;
     transition: opacity 0.24s linear 0.1s;
     z-index: 2;

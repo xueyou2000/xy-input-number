@@ -1,6 +1,6 @@
-import { InputNumberFormatter, InputNumberParser, NumberInputProps } from '@/interface';
-import { useControll } from 'utils-hooks';
+import { InputNumberFormatter, InputNumberParser, InputNumberProps } from '@/interface';
 import { useState } from 'react';
+import { useControll } from 'utils-hooks';
 
 const FIX_NUMBER = 1000;
 
@@ -59,7 +59,7 @@ function coverNumber(val: string) {
 
 type UseValueReturn = [(val: number | string) => string, string, React.Dispatch<React.SetStateAction<string>>, (val: string) => void, () => boolean, () => boolean, () => void, () => void];
 
-export default function useValue(props: NumberInputProps): UseValueReturn {
+export default function useValue(props: InputNumberProps): UseValueReturn {
     const { min, max, step = 1, precision, parser = DefaultParser, formatter = DefaultFormatter, onChange } = props;
     // 受控数值
     const [value, setValue, isControll] = useControll<number>(props, "value", "defaultValue");
@@ -114,14 +114,15 @@ export default function useValue(props: NumberInputProps): UseValueReturn {
     /**
      * 是否可以自增
      */
-    function canIncrease(getNextValue?: (number: number) => void) {
+    function canIncrease(getNextValue?: (num: number) => void) {
         const numberValue = coverNumber(getParserNumber(value));
         if (numberValue !== undefined) {
-            const next = (numberValue * FIX_NUMBER + step * FIX_NUMBER) / FIX_NUMBER;
+            const _step = (max && max - numberValue) < step ? max - numberValue : step;
+            const next = (numberValue * FIX_NUMBER + _step * FIX_NUMBER) / FIX_NUMBER;
             if (getNextValue) {
                 getNextValue(next);
             }
-            return max === undefined || next <= max;
+            return max === undefined || (_step !== 0 && next <= max);
         } else {
             if (getNextValue) {
                 getNextValue(min === undefined ? 1 : min);
@@ -133,14 +134,15 @@ export default function useValue(props: NumberInputProps): UseValueReturn {
     /**
      * 是否可以自减
      */
-    function canDecrease(getNextValue?: (number: number) => void) {
+    function canDecrease(getNextValue?: (num: number) => void) {
         const numberValue = coverNumber(getParserNumber(value));
         if (numberValue !== undefined) {
-            const next = (numberValue * FIX_NUMBER - step * FIX_NUMBER) / FIX_NUMBER;
+            const _step = (min && numberValue - min) < step ? numberValue - min : step;
+            const next = (numberValue * FIX_NUMBER - _step * FIX_NUMBER) / FIX_NUMBER;
             if (getNextValue) {
                 getNextValue(next);
             }
-            return min === undefined || next >= min;
+            return min === undefined || (_step !== 0 && next >= min);
         } else {
             if (getNextValue) {
                 getNextValue(max === undefined ? 1 : max);
