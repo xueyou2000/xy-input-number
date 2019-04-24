@@ -1,6 +1,6 @@
 import { InputNumberFormatter, InputNumberParser, InputNumberProps } from '@/interface';
-import { useState } from 'react';
-import { useControll } from 'utils-hooks';
+import { useState, useEffect } from 'react';
+import { useControll, useUpdateEffect } from 'utils-hooks';
 
 const FIX_NUMBER = 1000;
 
@@ -69,6 +69,11 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
     const [value, setValue, isControll] = useControll<number>(props, "value", "defaultValue");
     // 输入框里的临时字符串
     const [inputValue, setInputValue] = useState<string>(getFormatterInputValue(value));
+
+    // 受控时候由外部更新输入框的值
+    useEffect(() => {
+        setInputValue(getFormatterInputValue(value));
+    }, [isControll ? props.value : 1]);
 
     /**
      * 获取当前数值对应的输入框字符串
