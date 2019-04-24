@@ -3,7 +3,7 @@ import { addParameters, configure, storiesOf } from "@storybook/react";
 import { withInfo } from "@storybook/addon-info";
 import readme from "../README.md";
 import Markdown from "./component/MyMarkdown";
-import { NumberInput } from "../src";
+import { InputNumber } from "../src";
 import "./index.css";
 import "../src/assets";
 
@@ -23,7 +23,7 @@ function loadStories() {
     storiesOf("Api", module)
         .addDecorator(withInfo)
         .addParameters({ info: { inline: true, source: false } })
-        .add("Props", () => <NumberInput />);
+        .add("Props", () => <InputNumber />);
 
     createExamplesStories();
 }

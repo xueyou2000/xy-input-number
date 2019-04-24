@@ -20,6 +20,12 @@ describe("InputNumber", () => {
         expect(inputWrap.classList.contains('xy-inputnumber-disabled')).toBe(true);
     });
 
+    test('value can be null', () => {
+        const wrapper = render(<InputNumber value={null} placeholder="请输入" />);
+        const input = wrapper.getByPlaceholderText('请输入') as HTMLInputElement;
+        expect(input.value).toBe('');
+    });
+
     test("default parser", () => {
         const onChange = jest.fn();
         const onBlur = jest.fn();

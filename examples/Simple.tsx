@@ -3,7 +3,7 @@ import NumberInput from "../src";
 import { DefaultParser } from "../src/Hooks/useValue";
 
 export default function () {
-    const [v, setV] = useState<number>();
+    const [v, setV] = useState<number>(13);
 
     function change(num: number) {
         setV(num);

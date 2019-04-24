@@ -4,6 +4,10 @@ import { useControll } from 'utils-hooks';
 
 const FIX_NUMBER = 1000;
 
+function isEmpy(val: string | number) {
+    return val === undefined || val === null;
+}
+
 /**
  * 保留精度
  * @param precision 
@@ -23,7 +27,7 @@ export function coverPrecision(precision: number, val: string | number): string 
  * @param value 
  */
 export const DefaultFormatter: InputNumberFormatter = (value: number | string) => {
-    if (value === undefined || value === null) {
+    if (isEmpy(value)) {
         return "";
     } else {
         return (value + "");
@@ -72,7 +76,7 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      */
     function getFormatterInputValue(val: number | string) {
         const numberValue = getParserNumber(val);
-        return formatter(numberValue === undefined ? '' : numberValue + '');
+        return formatter(isEmpy(numberValue) ? '' : numberValue + '');
     }
 
     /**
@@ -80,7 +84,7 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      * @param val 
      */
     function getParserNumber(val: number | string) {
-        return parser(val === undefined ? '' : val + '');
+        return parser(isEmpy(val) ? '' : val + '');
     }
 
     /**

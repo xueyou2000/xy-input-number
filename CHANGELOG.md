@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.4 (Wed Apr 24 2019)
+
+-   修复`value`为`null`时的处理, 避免输入框内显示null字符串
+
 ## 0.0.3 (Fri Apr 19 2019)
 
 -   修复`step`配合`max`或`min`时, 再接近的时候自增， 自减不可用
