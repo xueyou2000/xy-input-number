@@ -5,7 +5,7 @@ import React from "react";
 import useValue, { DefaultFormatter, DefaultParser } from './Hooks/useValue';
 import { InputNumberProps } from "./interface";
 
-export function InputNumber(props: InputNumberProps) {
+export const InputNumber = React.forwardRef((props: InputNumberProps, ref: React.MutableRefObject<any>) => {
     const { prefixCls = "xy-inputnumber", className, style, defaultValue, onChange, parser = DefaultParser, formatter = DefaultFormatter, precision, min, max, step = 1, onKeyDown, onBlur, ...genericProps } = props;
     const [getFormatterInputValue, inputValue, setInputValue, changeValue, canIncrease, canDecrease, increase, decrease] = useValue(props);
     const classString = classNames(prefixCls, className, {
@@ -67,11 +67,11 @@ export function InputNumber(props: InputNumberProps) {
     }
 
     return (
-        <div className={classString} style={style}>
+        <div className={classString} style={style} ref={ref}>
             {renderControl()}
             <input {...genericProps} value={inputValue} autoComplete="off" aria-disabled={props.disabled} onChange={changeHandle} onKeyDown={keyDownHandle} onBlur={blurHandle} className={`${prefixCls}-input`} />
         </div>
     );
-}
+});
 
 export default React.memo(InputNumber);

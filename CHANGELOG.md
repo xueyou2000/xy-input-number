@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.5 (Wed Apr 24 2019)
+
+-   转发ref
+
 ## 0.0.4 (Wed Apr 24 2019)
 
 -   修复`value`为`null`时的处理, 避免输入框内显示null字符串
