@@ -25,15 +25,15 @@
 
 ```sh
 # npm
-npm install --save xy-input-number
+npm install --save xy-input-number utils-hooks classnames @fortawesome/fontawesome-svg-core fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 
 # yarn
-yarn add xy-input-number
+yarn add xy-input-number utils-hooks classnames @fortawesome/fontawesome-svg-core fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 ```
 
 ## 使用
 
-```ts
+```tsx
 import React from "react";
 import ReactDOM from "react-dom";
 import InputNumber from "xy-input-number";
