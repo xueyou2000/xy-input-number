@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Disabled",
+        "title": "禁用状态",
+        "desc": "设置 disabled 属性设置禁用状态"
+    },
+    {
+        "name": "Precision",
+        "title": "指定精度",
+        "desc": "比如保留小数点后3位"
+    },
+    {
+        "name": "MinMax",
+        "title": "最大最小限制",
+        "desc": "设置最小3, 最大15后，输入值将被限制在次区域内"
+    },
+    {
+        "name": "Step",
+        "title": "步长",
+        "desc": "控制自增/自减的步长, 步长0.33"
+    },
+    {
+        "name": "Formatter",
+        "title": "自定义格式化",
+        "desc": "输入框内显示格式化后的字符串，formatter和parser总是一起使用"
+    }
+]

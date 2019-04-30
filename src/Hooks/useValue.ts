@@ -1,6 +1,6 @@
-import { InputNumberFormatter, InputNumberParser, InputNumberProps } from '@/interface';
-import { useState, useEffect } from 'react';
-import { useControll, useUpdateEffect } from 'utils-hooks';
+import { InputNumberFormatter, InputNumberParser, InputNumberProps } from "../interface";
+import { useState, useEffect } from "react";
+import { useControll, useUpdateEffect } from "utils-hooks";
 
 const FIX_NUMBER = 1000;
 
@@ -10,51 +10,51 @@ function isEmpy(val: string | number) {
 
 /**
  * 保留精度
- * @param precision 
- * @param val 
+ * @param precision
+ * @param val
  */
 export function coverPrecision(precision: number, val: string | number): string {
-    if (precision === undefined || val === undefined || val === '') {
+    if (precision === undefined || val === undefined || val === "") {
         return String(val);
     } else {
-        return parseFloat(val + '').toFixed(precision);
+        return parseFloat(val + "").toFixed(precision);
     }
 }
 
 /**
  * 默认格式化
  * @description 返回数值的字符串
- * @param value 
+ * @param value
  */
 export const DefaultFormatter: InputNumberFormatter = (value: number | string) => {
     if (isEmpy(value)) {
         return "";
     } else {
-        return (value + "");
+        return value + "";
     }
 };
 
 /**
  * 默认格式化
  * @description 返回对应的反格式化字符串
- * @param value 
+ * @param value
  */
 export const DefaultParser: InputNumberParser = (value: string) => {
     if (value) {
-        return (value + '');
+        return value + "";
     } else {
-        return '';
+        return "";
     }
 };
 
 /**
  * 字符串转换为数值
  * @description 返回undefined则不是数值
- * @param val 
+ * @param val
  */
 function coverNumber(val: string) {
     if (val) {
-        const number = parseFloat(val + '');
+        const number = parseFloat(val + "");
         if (!isNaN(number)) {
             return number;
         }
@@ -77,24 +77,24 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
 
     /**
      * 获取当前数值对应的输入框字符串
-     * @param val 
+     * @param val
      */
     function getFormatterInputValue(val: number | string) {
         const numberValue = getParserNumber(val);
-        return formatter(isEmpy(numberValue) ? '' : numberValue + '');
+        return formatter(isEmpy(numberValue) ? "" : numberValue + "");
     }
 
     /**
      * 解析为数值字符串
-     * @param val 
+     * @param val
      */
     function getParserNumber(val: number | string) {
-        return parser(isEmpy(val) ? '' : val + '');
+        return parser(isEmpy(val) ? "" : val + "");
     }
 
     /**
      * 改变值
-     * @param val 
+     * @param val
      */
     function changeValue(val: string) {
         if (props.disabled) {
@@ -165,10 +165,12 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      */
     function increase() {
         let next: number;
-        const getNextValue = (n: number) => { next = n; };
+        const getNextValue = (n: number) => {
+            next = n;
+        };
 
         if (canIncrease(getNextValue)) {
-            changeValue(next + '');
+            changeValue(next + "");
         }
     }
 
@@ -177,10 +179,12 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      */
     function decrease() {
         let next: number;
-        const getNextValue = (n: number) => { next = n; };
+        const getNextValue = (n: number) => {
+            next = n;
+        };
 
         if (canDecrease(getNextValue)) {
-            changeValue(next + '');
+            changeValue(next + "");
         }
     }
 

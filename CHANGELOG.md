@@ -1,20 +1,24 @@
 # Change Log
 
+## 0.0.8 (Mon Apr 29 2019)
+
+-   从`storybook`换成`xy-manual-tools`来管理 demo
+
 ## 0.0.7 (Fri Apr 26 2019)
 
 -   更新依赖
 
 ## 0.0.6 (Wed Apr 24 2019)
 
--   修复受控时, 从外部设置值无效的BUG
+-   修复受控时, 从外部设置值无效的 BUG
 
 ## 0.0.5 (Wed Apr 24 2019)
 
--   转发ref
+-   转发 ref
 
 ## 0.0.4 (Wed Apr 24 2019)
 
--   修复`value`为`null`时的处理, 避免输入框内显示null字符串
+-   修复`value`为`null`时的处理, 避免输入框内显示 null 字符串
 
 ## 0.0.3 (Fri Apr 19 2019)
 
