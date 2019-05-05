@@ -1,6 +1,5 @@
 import React from "react";
 import NumberInput from "../src";
-import "../src/assets/index";
 import { DefaultParser } from "../src/Hooks/useValue";
 
 export default function() {
