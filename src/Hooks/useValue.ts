@@ -1,6 +1,6 @@
 import { InputNumberFormatter, InputNumberParser, InputNumberProps } from "../interface";
-import { useState, useEffect } from "react";
-import { useControll, useUpdateEffect } from "utils-hooks";
+import { useState, useEffect, useRef } from "react";
+import { DefineDefaultValue } from "utils-hooks";
 
 const FIX_NUMBER = 1000;
 
@@ -66,14 +66,20 @@ type UseValueReturn = [(val: number | string) => string, string, React.Dispatch<
 export default function useValue(props: InputNumberProps): UseValueReturn {
     const { min, max, step = 1, precision, parser = DefaultParser, formatter = DefaultFormatter, onChange } = props;
     // 受控数值
-    const [value, setValue, isControll] = useControll<number>(props, "value", "defaultValue");
+    const isControll = 'value' in props;
+    const valueProps = DefineDefaultValue(props, "value", "defaultValue");
     // 输入框里的临时字符串
-    const [inputValue, setInputValue] = useState<string>(getFormatterInputValue(value));
+    const [inputValue, setInputValue] = useState<string>(getFormatterInputValue(valueProps));
+    // 记录最后一次输入正确的时间字符串
+    const lastRef = useRef(valueProps);
 
     // 受控时候由外部更新输入框的值
     useEffect(() => {
-        setInputValue(getFormatterInputValue(value));
+        if (isControll) {
+            setInputValue(getFormatterInputValue(props.value));
+        }
     }, [isControll ? props.value : 1]);
+
 
     /**
      * 获取当前数值对应的输入框字符串
@@ -102,6 +108,10 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
         }
 
         let numberValue = coverNumber(coverPrecision(precision, getParserNumber(val)));
+        if (numberValue === undefined) {
+            numberValue = lastRef.current;
+        }
+
         if (min !== undefined && numberValue < min) {
             numberValue = min;
         }
@@ -109,10 +119,10 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
             numberValue = max;
         }
 
-        setInputValue(getFormatterInputValue(numberValue));
+        lastRef.current = numberValue;
 
-        if (!isControll) {
-            setValue(numberValue);
+        if (!isControll || getFormatterInputValue(numberValue) !== val) {
+            setInputValue(getFormatterInputValue(numberValue));
         }
 
         if (onChange) {
@@ -124,7 +134,7 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      * 是否可以自增
      */
     function canIncrease(getNextValue?: (num: number) => void) {
-        const numberValue = coverNumber(getParserNumber(value));
+        const numberValue = coverNumber(getParserNumber(lastRef.current));
         if (numberValue !== undefined) {
             const _step = (max && max - numberValue) < step ? max - numberValue : step;
             const next = (numberValue * FIX_NUMBER + _step * FIX_NUMBER) / FIX_NUMBER;
@@ -144,7 +154,7 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      * 是否可以自减
      */
     function canDecrease(getNextValue?: (num: number) => void) {
-        const numberValue = coverNumber(getParserNumber(value));
+        const numberValue = coverNumber(getParserNumber(lastRef.current));
         if (numberValue !== undefined) {
             const _step = (min && numberValue - min) < step ? numberValue - min : step;
             const next = (numberValue * FIX_NUMBER - _step * FIX_NUMBER) / FIX_NUMBER;

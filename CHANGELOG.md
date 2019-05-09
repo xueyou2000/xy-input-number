@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.1.0 (Sun May 05 2019)
+
+-   优化受控`value`性能
+-   增加回退, 输入的值不是合法数值，则回退到上一次正确的输入
+
 ## 0.0.9 (Sun May 05 2019)
 
 -   更新`xy-manual-tools`, 修复编译 demo

@@ -23,5 +23,10 @@
         "name": "Formatter",
         "title": "自定义格式化",
         "desc": "输入框内显示格式化后的字符串，formatter和parser总是一起使用"
+    },
+    {
+        "name": "Controll",
+        "title": "受控组件",
+        "desc": "根据给定的值渲染输入框内容"
     }
 ]

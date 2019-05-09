@@ -42,10 +42,10 @@ describe("InputNumber", () => {
         fireEvent.change(input, { target: { value: 'abc123' } });
         fireEvent.keyDown(input, { keyCode: 13 });
 
-        expect(input.value).toBe('');
+        expect(input.value).toBe('123');
         expect(onChange.mock.calls.length).toBe(2);
         expect(onBlur.mock.calls.length).toBe(1);
-        expect(onChange.mock.calls[1][0]).toBe(undefined);
+        expect(onChange.mock.calls[1][0]).toBe(123);
     });
 
     test('control button', () => {
