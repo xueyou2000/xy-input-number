@@ -6795,10 +6795,10 @@ querystringify@^2.1.1:
   resolved "https://registry.npm.taobao.org/querystringify/download/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha1-YOWl/WSn+L+k0qsu1v30yFutFU4=
 
-quick-react-scripts@1.1.8:
-  version "1.1.8"
-  resolved "https://registry.npm.taobao.org/quick-react-scripts/download/quick-react-scripts-1.1.8.tgz#daaf1845d09e3104eeadb304f9e75467bfc32387"
-  integrity sha1-2q8YRdCeMQTurbME+edUZ7/DI4c=
+quick-react-scripts@1.1.9:
+  version "1.1.9"
+  resolved "https://registry.npm.taobao.org/quick-react-scripts/download/quick-react-scripts-1.1.9.tgz#a10a5983b4c908bb5bc2f9b12f0b19f5d5c8bd8b"
+  integrity sha1-oQpZg7TJCLtbwvmxLwsZ9dXIvYs=
   dependencies:
     "@babel/core" "^7.3.4"
     "@babel/preset-env" "^7.3.4"
@@ -8425,10 +8425,10 @@ utils-hooks@0.0.65, utils-hooks@^0.0.65:
   resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.65.tgz#abb9e24413ebee7ef3e563b1967e890ba4e077dc"
   integrity sha1-q7niRBPr7n7z5WOxln6JC6Tgd9w=
 
-utils-hooks@0.0.66:
-  version "0.0.66"
-  resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.66.tgz#94f31d8fd04256550c4e981c9a4e7cff6e8c3bec"
-  integrity sha1-lPMdj9BCVlUMTpgcmk58/26MO+w=
+utils-hooks@0.0.69:
+  version "0.0.69"
+  resolved "https://registry.npm.taobao.org/utils-hooks/download/utils-hooks-0.0.69.tgz#b711fb1aaea7056f3ad662db5e71cfd034ca71af"
+  integrity sha1-txH7Gq6nBW861mLbXnHP0DTKca8=
 
 utils-merge@1.0.1:
   version "1.0.1"
@@ -8863,10 +8863,10 @@ xy-grid@^0.0.3:
     react-dom "^16.8.2"
     utils-hooks "0.0.65"
 
-xy-manual-tools@0.1.3:
-  version "0.1.3"
-  resolved "https://registry.npm.taobao.org/xy-manual-tools/download/xy-manual-tools-0.1.3.tgz#fb0636f248e682dd5d3b6143b8623bf4d7797548"
-  integrity sha1-+wY28kjmgt1dO2FDuGI79Nd5dUg=
+xy-manual-tools@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.npm.taobao.org/xy-manual-tools/download/xy-manual-tools-0.1.4.tgz#f6e1d00059438753ae585f409f0e5eac19f318ef"
+  integrity sha1-9uHQAFlDh1OuWF9Anw5erBnzGO8=
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"
