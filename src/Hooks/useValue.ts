@@ -66,7 +66,7 @@ type UseValueReturn = [(val: number | string) => string, string, React.Dispatch<
 export default function useValue(props: InputNumberProps): UseValueReturn {
     const { min, max, step = 1, precision, parser = DefaultParser, formatter = DefaultFormatter, onChange } = props;
     // 受控数值
-    const isControll = 'value' in props;
+    const isControll = "value" in props;
     const valueProps = DefineDefaultValue(props, "value", "defaultValue");
     // 输入框里的临时字符串
     const [inputValue, setInputValue] = useState<string>(getFormatterInputValue(valueProps));
@@ -79,7 +79,6 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
             setInputValue(getFormatterInputValue(props.value));
         }
     }, [isControll ? props.value : 1]);
-
 
     /**
      * 获取当前数值对应的输入框字符串
@@ -111,12 +110,14 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
         if (numberValue === undefined) {
             numberValue = lastRef.current;
         }
-
         if (min !== undefined && numberValue < min) {
             numberValue = min;
         }
         if (max !== undefined && numberValue > max) {
             numberValue = max;
+        }
+        if (getParserNumber(val) === "") {
+            numberValue = null;
         }
 
         lastRef.current = numberValue;

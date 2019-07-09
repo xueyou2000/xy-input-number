@@ -2,14 +2,14 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import React from "react";
-import useValue, { DefaultFormatter, DefaultParser } from './Hooks/useValue';
+import useValue, { DefaultFormatter, DefaultParser } from "./Hooks/useValue";
 import { InputNumberProps } from "./interface";
 
 export const InputNumber = React.forwardRef((props: InputNumberProps, ref: React.MutableRefObject<any>) => {
     const { prefixCls = "xy-inputnumber", className, style, defaultValue, onChange, parser = DefaultParser, formatter = DefaultFormatter, precision, min, max, step = 1, onKeyDown, onBlur, ...genericProps } = props;
     const [getFormatterInputValue, inputValue, setInputValue, changeValue, canIncrease, canDecrease, increase, decrease] = useValue(props);
     const classString = classNames(prefixCls, className, {
-        [`${prefixCls}-disabled`]: props.disabled
+        [`${prefixCls}-disabled`]: props.disabled,
     });
 
     function changeHandle(event: React.ChangeEvent<HTMLInputElement>) {
