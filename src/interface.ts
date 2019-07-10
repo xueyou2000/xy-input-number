@@ -98,4 +98,8 @@ export interface InputNumberProps extends InputGenericProps {
      * 步长
      */
     step?: number;
+    /**
+     * 一直显示控制按钮
+     */
+    showControl?: boolean;
 }

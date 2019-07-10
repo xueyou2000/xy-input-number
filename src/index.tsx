@@ -6,10 +6,11 @@ import useValue, { DefaultFormatter, DefaultParser } from "./Hooks/useValue";
 import { InputNumberProps } from "./interface";
 
 export const InputNumber = React.forwardRef((props: InputNumberProps, ref: React.MutableRefObject<any>) => {
-    const { prefixCls = "xy-inputnumber", className, style, defaultValue, onChange, parser = DefaultParser, formatter = DefaultFormatter, precision, min, max, step = 1, onKeyDown, onBlur, ...genericProps } = props;
+    const { prefixCls = "xy-inputnumber", className, style, defaultValue, onChange, parser = DefaultParser, showControl = false, formatter = DefaultFormatter, precision, min, max, step = 1, onKeyDown, onBlur, ...genericProps } = props;
     const [getFormatterInputValue, inputValue, setInputValue, changeValue, canIncrease, canDecrease, increase, decrease] = useValue(props);
     const classString = classNames(prefixCls, className, {
         [`${prefixCls}-disabled`]: props.disabled,
+        [`${prefixCls}-showControl`]: showControl,
     });
 
     function changeHandle(event: React.ChangeEvent<HTMLInputElement>) {

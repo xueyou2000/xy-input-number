@@ -45,6 +45,7 @@ ReactDOM.render(<InputNumber />, container);
 | defaultValue       | 输入框默认值                                 | number                                                | 无     |
 | placeholder        | 占位符文本                                   | string                                                | 无     |
 | autoFocus          | 自动焦点                                     | boolean                                               | 无     |
+| showControl        | 是否一直显示控制按钮                         | boolean                                               | 无     |
 | onFocus            | 输入框焦点事件                               | (e: React.FocusEvent<HTMLInputElement>) => void       | 无     |
 | onBlur             | 输入框失去焦点事件                           | (e: React.FocusEvent<HTMLInputElement>) => void       | 无     |
 | onKeyDown          | 键盘事件                                     | (e: React.KeyboardEvent<HTMLInputElement>) => void    | 无     |
