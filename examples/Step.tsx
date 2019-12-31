@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NumberInput from "../src";
 
-export default function () {
-    return <NumberInput style={{ width: "180px" }} step={0.33} max={15} min={3} />;
+export default function() {
+    return <NumberInput style={{ width: "180px" }} precision={3} step={0.001} max={0.03} min={0} />;
 }

@@ -1,8 +1,7 @@
 import { InputNumberFormatter, InputNumberParser, InputNumberProps } from "../interface";
 import { useState, useEffect, useRef } from "react";
 import { DefineDefaultValue } from "utils-hooks";
-
-const FIX_NUMBER = 1000;
+import { sub, add } from "../utils";
 
 function isEmpy(val: string | number) {
     return val === undefined || val === null;
@@ -136,17 +135,9 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      */
     function canIncrease(getNextValue?: (num: number) => void) {
         const numberValue = coverNumber(getParserNumber(lastRef.current));
-        if (numberValue !== undefined) {
-            const _step = (max && max - numberValue) < step ? max - numberValue : step;
-            const next = (numberValue * FIX_NUMBER + _step * FIX_NUMBER) / FIX_NUMBER;
-            if (getNextValue) {
-                getNextValue(next);
-            }
-            return max === undefined || (_step !== 0 && next <= max);
+        if (max !== undefined && numberValue !== undefined) {
+            return numberValue < max;
         } else {
-            if (getNextValue) {
-                getNextValue(min === undefined ? 1 : min);
-            }
             return true;
         }
     }
@@ -156,17 +147,9 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      */
     function canDecrease(getNextValue?: (num: number) => void) {
         const numberValue = coverNumber(getParserNumber(lastRef.current));
-        if (numberValue !== undefined) {
-            const _step = (min && numberValue - min) < step ? numberValue - min : step;
-            const next = (numberValue * FIX_NUMBER - _step * FIX_NUMBER) / FIX_NUMBER;
-            if (getNextValue) {
-                getNextValue(next);
-            }
-            return min === undefined || (_step !== 0 && next >= min);
+        if (min !== undefined && numberValue !== undefined) {
+            return numberValue > min;
         } else {
-            if (getNextValue) {
-                getNextValue(max === undefined ? 1 : max);
-            }
             return true;
         }
     }
@@ -175,28 +158,47 @@ export default function useValue(props: InputNumberProps): UseValueReturn {
      * 自增值
      */
     function increase() {
-        let next: number;
-        const getNextValue = (n: number) => {
-            next = n;
-        };
-
-        if (canIncrease(getNextValue)) {
-            changeValue(next + "");
+        if (!canIncrease()) {
+            return;
         }
+
+        // 计算自增值
+        const numberValue = coverNumber(getParserNumber(lastRef.current)) || 0;
+        let next: number;
+        if (max !== undefined) {
+            if (add(numberValue, step) > max) {
+                next = max;
+            } else {
+                next = add(numberValue, step);
+            }
+        } else {
+            next = add(numberValue, step);
+        }
+        changeValue(next + "");
     }
 
     /**
      * 自减值
      */
     function decrease() {
-        let next: number;
-        const getNextValue = (n: number) => {
-            next = n;
-        };
-
-        if (canDecrease(getNextValue)) {
-            changeValue(next + "");
+        if (!canDecrease()) {
+            return;
         }
+
+        // 计算自减值
+        const numberValue = coverNumber(getParserNumber(lastRef.current)) || 0;
+        let next: number;
+        if (min !== undefined) {
+            if (sub(numberValue, step) < min) {
+                next = min;
+            } else {
+                next = sub(numberValue, step);
+            }
+        } else {
+            next = sub(numberValue, step);
+        }
+
+        changeValue(next + "");
     }
 
     return [getFormatterInputValue, inputValue, setInputValue, changeValue, canIncrease, canDecrease, increase, decrease];
